@@ -26,6 +26,7 @@
     "build:umd": "webpack src/index.js dist/react-d3-ctx.js --config webpack.config.development.js",
     "build:umd:min": "webpack src/index.js dist/react-d3-ctx.min.js --config webpack.config.production.js",
     "build": "npm run build:lib && npm run build:umd && npm run build:umd:min",
+    "clean": "rimraf lib dist && true",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
@@ -38,6 +39,7 @@
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-2": "^6.3.13",
     "mocha": "^2.3.4",
+    "rimraf": "^2.4.4",
     "webpack": "^1.12.9"
   }
 }
