@@ -20,7 +20,7 @@ export function calculateScales(chartWidth, chartHeight, xValues, yValues) {
 	};
 }
 
-export function contextProp(component, prop) {
+export function getInheritableProp(component, prop) {
 	return component.props[prop] != null
 		? component.props[prop]
 		: component.context[prop];

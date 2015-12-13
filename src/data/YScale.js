@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react';
-import {contextProp, calculateScale} from '../util.js';
+import {getInheritableProp, calculateScale} from '../util.js';
 
 export default React.createClass({
 	displayName: 'YScale',
@@ -18,8 +18,8 @@ export default React.createClass({
 		yScale: React.PropTypes.func,
 	},
 	getChildContext() {
-		const height = contextProp(this, 'height');
-		const yValues = contextProp(this, 'yValues');
+		const height = getInheritableProp(this, 'height');
+		const yValues = getInheritableProp(this, 'yValues');
 		return {
 			yScale: calculateScale(height, yValues)
 		};
