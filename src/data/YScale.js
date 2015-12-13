@@ -4,6 +4,7 @@ import React from 'react';
 import {contextProp, calculateScale} from '../util.js';
 
 export default React.createClass({
+	displayName: 'YScale',
 	getDefaultProps() {
 		return {
 			className: 'rd3-yscale',

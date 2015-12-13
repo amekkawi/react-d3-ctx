@@ -72,6 +72,7 @@ const TickMarks = React.createClass({
 });
 
 export default React.createClass({
+	displayName: 'TickMarksCtx',
 	contextTypes: {
 		xScale: React.PropTypes.func,
 		yScale: React.PropTypes.func,

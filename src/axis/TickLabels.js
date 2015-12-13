@@ -85,6 +85,7 @@ const TickLabels = React.createClass({
 });
 
 export default React.createClass({
+	displayName: 'TickLabelsCtx',
 	contextTypes: {
 		xScale: React.PropTypes.func,
 		yScale: React.PropTypes.func,

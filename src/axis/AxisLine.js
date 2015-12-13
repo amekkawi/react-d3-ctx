@@ -40,6 +40,7 @@ const AxisLine = React.createClass({
 });
 
 export default React.createClass({
+	displayName: 'AxisLineCtx',
 	contextTypes: {
 		orient: React.PropTypes.oneOf(['top', 'bottom', 'left', 'right']).isRequired,
 		xScale: React.PropTypes.func,

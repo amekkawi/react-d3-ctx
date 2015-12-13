@@ -80,6 +80,7 @@ export const Circles = React.createClass({
 });
 
 export default React.createClass({
+	displayName: 'CirclesCtx',
 	contextTypes: {
 		data: React.PropTypes.array,
 		seriesValuesAccessor: React.PropTypes.func,

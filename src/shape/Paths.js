@@ -90,6 +90,7 @@ export const Paths = React.createClass({
 });
 
 export default React.createClass({
+	displayName: 'PathsCtx',
 	contextTypes: {
 		data: React.PropTypes.array,
 		seriesValuesAccessor: React.PropTypes.func,

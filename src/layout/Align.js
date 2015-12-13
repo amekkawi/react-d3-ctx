@@ -39,6 +39,7 @@ export const Align = React.createClass({
 });
 
 export default React.createClass({
+	displayName: 'AlignCtx',
 	contextTypes: {
 		width: React.PropTypes.number,
 		height: React.PropTypes.number,
