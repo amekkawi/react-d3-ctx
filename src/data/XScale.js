@@ -15,13 +15,13 @@ export default React.createClass({
 		xValues: React.PropTypes.array,
 	},
 	childContextTypes: {
-		yScale: React.PropTypes.func,
+		xScale: React.PropTypes.func,
 	},
 	getChildContext() {
 		const width = contextProp(this, 'width');
 		const xValues = contextProp(this, 'xValues');
 		return {
-			yScale: calculateScale(width, xValues)
+			xScale: calculateScale(width, xValues)
 		};
 	},
 	render() {
