@@ -9,7 +9,8 @@ export {AxisLine, TickLabels, TickMarks};
 // data
 import XScale from './data/XScale';
 import YScale from './data/YScale';
-export {XScale, YScale};
+import PointData from './data/PointData';
+export {XScale, YScale, PointData};
 
 // layout
 import Align from './layout/Align';
