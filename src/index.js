@@ -15,7 +15,8 @@ export {XScale, YScale, PointData};
 // layout
 import Align from './layout/Align';
 import Region from './layout/Region';
-export {Align, Region};
+import ClipRect from './layout/ClipRect';
+export {Align, Region, ClipRect};
 
 // shape
 import Circles from './shape/Circles';
