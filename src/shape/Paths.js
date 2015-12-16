@@ -82,7 +82,7 @@ export const Paths = React.createClass({
 					fill={fillFn && fill(series, idx)}
 					stroke={strokeFn && stroke(series, idx)}
 					strokeWidth={strokeWidthFn && strokeWidth(series, idx)}
-					style={pathStyleFn && pathStyleFn(series, idx)}
+					style={pathStyleFn && pathStyle(series, idx)}
 				/>)}
 			</g>
 		)

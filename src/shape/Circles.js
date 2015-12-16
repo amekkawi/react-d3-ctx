@@ -66,7 +66,7 @@ export const Circles = React.createClass({
 					seriesValuesAccessor(series).map(value =>
 						<circle
 							className={circleClassNameFn ? circleClassName(series, idx) : circleClassName}
-							r={circleRadiusFn ? circleRadiusFn(series, idx) : circleRadius}
+							r={circleRadiusFn ? circleRadius(series, idx) : circleRadius}
 							fill={fillFn && fill(series, idx)}
 							stroke={strokeFn && stroke(series, idx)}
 							strokeWidth={strokeWidthFn && strokeWidth(series, idx)}
