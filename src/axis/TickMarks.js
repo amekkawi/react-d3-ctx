@@ -9,7 +9,8 @@ const TickMarks = React.createClass({
 		className: React.PropTypes.string,
 		ticks: React.PropTypes.oneOfType([
 			React.PropTypes.arrayOf(React.PropTypes.number),
-			React.PropTypes.number
+			React.PropTypes.number,
+			React.PropTypes.func,
 		]),
 		tickSize: React.PropTypes.number,
 		stroke: React.PropTypes.string,
@@ -28,6 +29,10 @@ const TickMarks = React.createClass({
 		var {ticks} = this.props;
 		const {className, scale, orient, tickSize, stroke, strokeWidth, tickStyle} = this.props;
 		const orientFlip = orient === 'top' || orient === 'right' ? -1 : 1;
+
+		if (typeof ticks === 'function') {
+			ticks = ticks(this.props);
+		}
 
 		if (typeof ticks === 'number') {
 			ticks = scale.ticks

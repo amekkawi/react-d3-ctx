@@ -9,7 +9,8 @@ const TickLabels = React.createClass({
 		className: React.PropTypes.string,
 		ticks: React.PropTypes.oneOfType([
 			React.PropTypes.arrayOf(React.PropTypes.number),
-			React.PropTypes.number
+			React.PropTypes.number,
+			React.PropTypes.func,
 		]),
 		fill: React.PropTypes.string,
 		stroke: React.PropTypes.string,
@@ -32,6 +33,10 @@ const TickLabels = React.createClass({
 	render() {
 		var {ticks} = this.props;
 		const {className, scale, orient, format, tickSize, fill, stroke, strokeWidth} = this.props;
+
+		if (typeof ticks === 'function') {
+			ticks = ticks(this.props);
+		}
 
 		if (typeof ticks === 'number') {
 			ticks = scale.ticks
