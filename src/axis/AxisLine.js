@@ -20,8 +20,22 @@ const AxisLine = React.createClass({
 			strokeWidth: 1,
 		};
 	},
+	getPathStyle() {
+		const {style} = this.props;
+		const baseStyle = {
+			shapeRendering: 'crispEdges'
+		};
+		if (!style)
+			return baseStyle;
+
+		return {
+			...baseStyle,
+			...style
+		};
+	},
 	render() {
-		const {className, orient, scale, tickSize, stroke, strokeWidth, style} = this.props;
+		const {className, orient, scale, tickSize, stroke, strokeWidth} = this.props;
+		const pathStyle = this.getPathStyle();
 		const orientFlip = orient === "top" || orient === "left" ? -1 : 1;
 		const range = scale.rangeExtent ? scale.rangeExtent() : scale.range();
 		const d = orient === "bottom" || orient === "top"
@@ -34,8 +48,7 @@ const AxisLine = React.createClass({
 			fill="none"
 			stroke={stroke}
 			strokeWidth={strokeWidth}
-			shapeRendering="crispEdges"
-			style={style} />
+			style={pathStyle} />
 	}
 });
 
