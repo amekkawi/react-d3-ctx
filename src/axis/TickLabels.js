@@ -30,9 +30,8 @@ const TickLabels = React.createClass({
 			format: v => v,
 		}
 	},
-	render() {
-		var {ticks} = this.props;
-		const {className, scale, orient, format, tickSize, fill, stroke, strokeWidth} = this.props;
+	getTicks() {
+		var {ticks, scale} = this.props;
 
 		if (typeof ticks === 'function') {
 			ticks = ticks(this.props);
@@ -44,32 +43,33 @@ const TickLabels = React.createClass({
 				: scale.domain();
 		}
 
+		return ticks;
+	},
+	render() {
+		const ticks = this.getTicks();
+		const {className, scale, orient, format, tickSize, fill, stroke, strokeWidth, labelStyle} = this.props;
+
 		const adjustedScale = scale.rangeBand
 			? d => scale(d) + scale.rangeBand() / 2
 			: scale;
 
-		var orientFlip = 1, tr, textAnchor, dominantBaseline;
+		var orientFlip = 1, tr, dy, textAnchor;
 		switch (orient) {
 			case 'top':
 				orientFlip = -1;
 			case 'bottom':
+				dy = orientFlip < 0 ? '0em' : '.71em';
 				tr = tick => `translate(${adjustedScale(tick)},${tickSize * orientFlip})`;
 				textAnchor = 'middle';
-				dominantBaseline = orient === 'top' ? null : 'hanging';
 				break;
 			case 'left':
+				dy = '.32em';
 				orientFlip = -1;
 			case 'right':
 				tr = tick => `translate(${tickSize * orientFlip},${adjustedScale(tick)})`;
-				dominantBaseline = 'central';
 				textAnchor = orient === 'left' ? 'end' : 'start';
 				break;
 		}
-
-		const labelStyle = {
-			dominantBaseline,
-			...this.props.labelStyle,
-		};
 
 		return (
 			<g className={className}
@@ -80,7 +80,7 @@ const TickLabels = React.createClass({
 			   style={labelStyle}>
 
 				{ticks.map((tick, idx) =>
-					<text key={idx} transform={tr(tick)}>
+					<text key={idx} transform={tr(tick)} dy={dy}>
 						{format(tick)}
 					</text>
 				)}
