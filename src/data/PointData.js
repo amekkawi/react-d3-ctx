@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react';
-import {getInheritableProp, calculateScale} from '../util';
+import {getInheritableProp, createScale} from '../util';
 
 export default React.createClass({
 	displayName: 'PointData',
@@ -37,8 +37,8 @@ export default React.createClass({
 		const flatValues = this.flattenPointValues(data, !xScale, !yScale);
 		return {
 			data,
-			xScale: xScale || calculateScale(width, flatValues.xValues),
-			yScale: yScale || calculateScale(height, flatValues.yValues)
+			xScale: xScale || createScale(flatValues.xValues, [0, width]),
+			yScale: yScale || createScale(flatValues.yValues, [height, 0])
 		};
 	},
 	flattenPointValues(doX, doY) {

@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react';
-import {getInheritableProp, calculateScale} from '../util.js';
+import {getInheritableProp, createScale} from '../util.js';
 
 export default React.createClass({
 	displayName: 'XScale',
@@ -21,7 +21,7 @@ export default React.createClass({
 		const width = getInheritableProp(this, 'width');
 		const xValues = getInheritableProp(this, 'xValues');
 		return {
-			xScale: calculateScale(width, xValues)
+			xScale: createScale(xValues, [0, width])
 		};
 	},
 	render() {

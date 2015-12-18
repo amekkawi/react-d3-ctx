@@ -2,21 +2,18 @@
 
 import d3 from 'd3';
 
-export function calculateScale(rangeEnd, values) {
-	var scale;
-	if (values.length > 0 && isDate(values[0])) {
-		scale = d3.time.scale().range([0, rangeEnd]);
-	}
-	else {
-		scale = d3.scale.linear().range([0, rangeEnd]);
-	}
+export function createScale(values, range) {
+	var scale = values.length > 0 && isDate(values[0])
+		? d3.time.scale()
+		: d3.scale.linear();
+	if (range) scale.range(range);
 	return scale.domain(d3.extent(values));
 }
 
 export function calculateScales(chartWidth, chartHeight, xValues, yValues) {
 	return {
-		xScale: calculateScale(chartWidth, xValues),
-		yScale: calculateScale(chartHeight, yValues)
+		xScale: createScale(xValues, [0, chartWidth]),
+		yScale: createScale(yValues, [chartHeight, 0])
 	};
 }
 
