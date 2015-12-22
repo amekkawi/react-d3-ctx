@@ -1,5 +1,6 @@
 "use strict";
 
+var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
@@ -18,9 +19,15 @@ module.exports = {
 		}
 	},
 	module: {
-		loaders: [
-			{ test: /\.js$/, loaders: ['babel-loader'], exclude: /node_modules/ }
-		]
+		loaders: [{
+			test: /\.js$/,
+			loaders: ['babel-loader'],
+			include: path.join(__dirname, './src'),
+			query: {
+				"presets": ["es2015-loose", "react"],
+				"plugins": ["transform-object-rest-spread"]
+			}
+		}]
 	},
 	output: {
 		library: 'rd3ctx',
