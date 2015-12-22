@@ -65,13 +65,13 @@ export const Circles = React.createClass({
 			   stroke={strokeFn ? null : stroke}
 			   strokeWidth={strokeWidthFn ? null : strokeWidth}>
 				{data.map((series, idx) =>
-					seriesValuesAccessor(series).map(value =>
+					seriesValuesAccessor(series).map((value, idv) =>
 						<circle
-							className={circleClassNameFn ? circleClassName(series, idx) : circleClassName}
-							r={circleRadiusFn ? circleRadius(series, idx) : circleRadius}
-							fill={fillFn && fill(series, idx)}
-							stroke={strokeFn && stroke(series, idx)}
-							strokeWidth={strokeWidthFn && strokeWidth(series, idx)}
+							className={circleClassNameFn ? circleClassName(series, idx, idv) : circleClassName}
+							r={circleRadiusFn ? circleRadius(series, idx, idv) : circleRadius}
+							fill={fillFn && fill(series, idx, idv)}
+							stroke={strokeFn && stroke(series, idx, idv)}
+							strokeWidth={strokeWidthFn && strokeWidth(series, idx, idv)}
 							cx={xScale(xAccessor ? xAccessor(value) : value.x)}
 							cy={yScale(yAccessor ? yAccessor(value) : value.y)}
 						/>
