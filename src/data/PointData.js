@@ -6,7 +6,14 @@ import {getInheritableProp, createScale} from '../util';
 export default React.createClass({
 	displayName: 'PointData',
 	propTypes: {
-		seriesValuesAccessor: React.PropTypes.func
+		data: React.propTypes.array,
+		seriesValuesAccessor: React.PropTypes.func,
+		width: React.PropTypes.number,
+		height: React.PropTypes.number,
+		xScale: React.PropTypes.func,
+		yScale: React.PropTypes.func,
+		xAccessor: React.PropTypes.func,
+		yAccessor: React.PropTypes.func,
 	},
 	contextTypes: {
 		width: React.PropTypes.number,
