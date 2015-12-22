@@ -42,6 +42,7 @@ export const Circles = React.createClass({
 			seriesValuesAccessor: series => series.values,
 			fill: 'rgba(31, 119, 180, .75)',
 			stroke: 'none',
+			circleRadius: 3,
 		};
 	},
 	render() {
