@@ -5,6 +5,8 @@ import React from 'react';
 
 export const Circles = React.createClass({
 	propTypes: {
+		xScale: React.PropTypes.func.isRequired,
+		yScale: React.PropTypes.func.isRequired,
 		className: React.PropTypes.string,
 		data: React.PropTypes.array,
 		seriesValuesAccessor: React.PropTypes.func,
@@ -14,14 +16,13 @@ export const Circles = React.createClass({
 		]),
 		strokeWidth: React.PropTypes.oneOfType([
 			React.PropTypes.string,
-			React.PropTypes.number
+			React.PropTypes.number,
+			React.PropTypes.func
 		]),
 		fill: React.PropTypes.oneOfType([
 			React.PropTypes.func,
 			React.PropTypes.string
 		]),
-		xScale: React.PropTypes.func,
-		yScale: React.PropTypes.func,
 		xAccessor: React.PropTypes.func,
 		yAccessor: React.PropTypes.func,
 		circleClassName: React.PropTypes.oneOfType([
