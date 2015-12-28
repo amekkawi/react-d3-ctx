@@ -20,7 +20,8 @@ export {Align, Region, ClipRect};
 
 // interaction
 import MouseRegion from './interaction/MouseRegion';
-export {MouseRegion};
+import MouseRegionLine from './interaction/MouseRegionLine';
+export {MouseRegion, MouseRegionLine};
 
 // shape
 import Circles from './shape/Circles';
