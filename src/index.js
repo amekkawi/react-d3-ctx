@@ -18,6 +18,10 @@ import Region from './layout/Region';
 import ClipRect from './layout/ClipRect';
 export {Align, Region, ClipRect};
 
+// interaction
+import MouseRegion from './interaction/MouseRegion';
+export {MouseRegion};
+
 // shape
 import Circles from './shape/Circles';
 import Paths from './shape/Paths';
