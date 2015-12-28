@@ -3,6 +3,17 @@
 import React from 'react';
 import throttleFn from 'lodash.throttle';
 
+function resetState() {
+	return {
+		mouseOffsetX: null,
+		mouseOffsetY: null,
+		mousePercentX: null,
+		mousePercentY: null,
+		mouseUserX: null,
+		mouseUserY: null,
+	};
+}
+
 export default React.createClass({
 	displayName: 'MouseRegion',
 	propTypes: {
@@ -15,15 +26,27 @@ export default React.createClass({
 		height: React.PropTypes.number,
 		mouseOffsetX: React.PropTypes.number,
 		mouseOffsetY: React.PropTypes.number,
+		mousePercentX: React.PropTypes.number,
+		mousePercentY: React.PropTypes.number,
+		mouseUserX: React.PropTypes.number,
+		mouseUserY: React.PropTypes.number,
 	},
 	getChildContext() {
 		const {width, height} = this.props;
-		const {mouseOffsetX, mouseOffsetY} = this.state;
+		const {
+			mouseOffsetX, mouseOffsetY,
+			mousePercentX, mousePercentY,
+			mouseUserX, mouseUserY,
+			} = this.state;
 		return {
 			width,
 			height,
 			mouseOffsetX,
 			mouseOffsetY,
+			mousePercentX,
+			mousePercentY,
+			mouseUserX,
+			mouseUserY,
 		};
 	},
 	getDefaultProps() {
@@ -33,32 +56,32 @@ export default React.createClass({
 		};
 	},
 	getInitialState() {
-		return {
-			mouseOffsetX: null,
-			mouseOffsetY: null,
-		};
+		return resetState();
 	},
 	handleMouseMove(evt) {
+		const {width, height} = this.props;
 		const {mouseOffsetX: oldOffsetX, mouseOffsetY: oldOffsetY} = this.state;
 		const targetBoundRect = evt.target.getBoundingClientRect();
 
 		const mouseOffsetX = evt.clientX - targetBoundRect.left;
 		const mouseOffsetY = evt.clientY - targetBoundRect.top;
+		const mousePercentX = mouseOffsetX / targetBoundRect.width;
+		const mousePercentY = mouseOffsetY / targetBoundRect.height;
 
 		if (oldOffsetX !== mouseOffsetX || oldOffsetY !== mouseOffsetY)
 			this._throttleSetOffset({
 				mouseOffsetX,
 				mouseOffsetY,
+				mousePercentX,
+				mousePercentY,
+				mouseUserX: mousePercentX * width,
+				mouseUserY: mousePercentY * height,
 			});
 	},
 	handleMouseOut() {
 		if (this._throttleSetOffset)
 			this._throttleSetOffset.cancel();
-
-		this.setState({
-			mouseOffsetX: null,
-			mouseOffsetY: null,
-		});
+		this.setState(resetState());
 	},
 	componentDidMount() {
 		if (!this._throttleSetOffset)

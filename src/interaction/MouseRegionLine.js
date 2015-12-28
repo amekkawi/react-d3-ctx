@@ -18,24 +18,24 @@ const MouseRegionLine = React.createClass({
 	render() {
 		const {
 			className, orient,
-			width, height, mouseOffsetX, mouseOffsetY,
+			width, height, mouseUserX, mouseUserY,
 			style, stroke, strokeWidth, strokeDasharray
 			} = this.props;
 
 		var x1, x2, y1, y2;
 		if (orient === 'horizontal') {
-			if (mouseOffsetY == null)
+			if (mouseUserY == null)
 				return <line className={className} style={{ display: 'none' }} />
 
-			y1 = y2 = mouseOffsetY;
+			y1 = y2 = mouseUserY;
 			x1 = 0;
 			x2 = width;
 		}
 		else {
-			if (mouseOffsetX == null)
+			if (mouseUserX == null)
 				return <line className={className} style={{ display: 'none' }} />
 
-			x1 = x2 = mouseOffsetX;
+			x1 = x2 = mouseUserX;
 			y1 = 0;
 			y2 = height;
 		}
@@ -63,8 +63,8 @@ export default React.createClass({
 	contextTypes: {
 		width: React.PropTypes.number.isRequired,
 		height: React.PropTypes.number.isRequired,
-		mouseOffsetX: React.PropTypes.number,
-		mouseOffsetY: React.PropTypes.number,
+		mouseUserX: React.PropTypes.number,
+		mouseUserY: React.PropTypes.number,
 	},
 	render() {
 		return <MouseRegionLine {...this.context} {...this.props} />
