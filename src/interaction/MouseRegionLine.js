@@ -19,7 +19,7 @@ const MouseRegionLine = React.createClass({
 		const {
 			className, orient,
 			width, height, mouseOffsetX, mouseOffsetY,
-			style, stroke, strokeWidth, strokeDashArray
+			style, stroke, strokeWidth, strokeDasharray
 			} = this.props;
 
 		var x1, x2, y1, y2;
@@ -53,7 +53,7 @@ const MouseRegionLine = React.createClass({
 			y2={y2}
 			stroke={stroke}
 			strokeWidth={strokeWidth}
-			strokeDashArray={strokeDashArray}
+			strokeDasharray={strokeDasharray}
 			style={lineStyle}/>
 	}
 });

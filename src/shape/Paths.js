@@ -33,7 +33,7 @@ export const Paths = React.createClass({
 			React.PropTypes.string,
 			React.PropTypes.number
 		]),
-		strokeDashArray: React.PropTypes.oneOfType([
+		strokeDasharray: React.PropTypes.oneOfType([
 			React.PropTypes.string,
 			React.PropTypes.number
 		])
@@ -54,7 +54,7 @@ export const Paths = React.createClass({
 			className, data, seriesValuesAccessor,
 			xScale, yScale, xAccessor, yAccessor,
 			stroke, fill, interpolationType,
-			pathClassName, pathStyle, strokeWidth, strokeDashArray,
+			pathClassName, pathStyle, strokeWidth, strokeDasharray,
 			} = this.props;
 
 		const strokeFn = stroke && typeof stroke === 'function' || null;
@@ -70,7 +70,7 @@ export const Paths = React.createClass({
 
 		return (
 			<g className={className}
-			   strokeDashArray={strokeDashArray}
+			   strokeDasharray={strokeDasharray}
 			   fill={fillFn ? null : fill}
 			   stroke={strokeFn ? null : stroke}
 			   strokeWidth={strokeWidthFn ? null : strokeWidth}
