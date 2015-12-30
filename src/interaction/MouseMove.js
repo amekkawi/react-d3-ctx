@@ -17,7 +17,7 @@ function resetState() {
 }
 
 export default React.createClass({
-	displayName: 'MouseRegion',
+	displayName: 'MouseMove',
 	propTypes: {
 		width: React.PropTypes.number.isRequired,
 		height: React.PropTypes.number.isRequired,

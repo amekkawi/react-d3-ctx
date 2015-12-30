@@ -6,11 +6,24 @@ const baseStyle = {
 	shapeRendering: 'crispEdges',
 };
 
-const MouseRegionLine = React.createClass({
+const MouseLine = React.createClass({
+	propTypes: {
+		width: React.PropTypes.number.isRequired,
+		height: React.PropTypes.number.isRequired,
+		mouseUserX: React.PropTypes.number,
+		mouseUserY: React.PropTypes.number,
+		orient: React.PropTypes.oneOf(['horizontal', 'vertical']),
+		className: React.PropTypes.string,
+		stroke: React.PropTypes.string,
+		strokeWidth: React.PropTypes.oneOfType([
+			React.PropTypes.number,
+			React.PropTypes.string
+		]),
+		strokeDasharray: React.PropTypes.string,
+	},
 	getDefaultProps() {
 		return {
 			orient: 'vertical',
-			seriesValuesAccessor: series => series.values,
 			stroke: 'rgba(0,0,0,.25)',
 			strokeWidth: 1,
 		};
@@ -59,7 +72,7 @@ const MouseRegionLine = React.createClass({
 });
 
 export default React.createClass({
-	displayName: 'MouseRegionLineCtx',
+	displayName: 'MouseLineCtx',
 	contextTypes: {
 		width: React.PropTypes.number.isRequired,
 		height: React.PropTypes.number.isRequired,
@@ -67,6 +80,6 @@ export default React.createClass({
 		mouseUserY: React.PropTypes.number,
 	},
 	render() {
-		return <MouseRegionLine {...this.context} {...this.props} />
+		return <MouseLine {...this.context} {...this.props} />
 	}
 });

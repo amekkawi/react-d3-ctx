@@ -19,9 +19,9 @@ import ClipRect from './layout/ClipRect';
 export {Align, Region, ClipRect};
 
 // interaction
-import MouseRegion from './interaction/MouseRegion';
-import MouseRegionLine from './interaction/MouseRegionLine';
-export {MouseRegion, MouseRegionLine};
+import MouseMove from './interaction/MouseMove';
+import MouseLine from './interaction/MouseLine';
+export {MouseMove, MouseLine};
 
 // shape
 import Circles from './shape/Circles';
