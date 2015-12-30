@@ -23,6 +23,7 @@ export default React.createClass({
 		width: React.PropTypes.number,
 		height: React.PropTypes.number,
 		throttle: React.PropTypes.number,
+		onMove: React.PropTypes.func,
 	},
 	contextTypes: {
 		width: React.PropTypes.number,
@@ -98,11 +99,15 @@ export default React.createClass({
 		if (this._throttleSetOffset)
 			this._throttleSetOffset.cancel();
 		this.setState(resetState());
+		if (this.props.onMove)
+			this.props.onMove(null);
 	},
 	componentDidMount() {
 		if (!this._throttleSetOffset)
 			this._throttleSetOffset = throttleFn(newState => {
 				this.setState(newState);
+				if (this.props.onMove)
+					this.props.onMove(newState);
 			}, this.props.throttle);
 	},
 	componentWillUnmount() {
@@ -112,7 +117,7 @@ export default React.createClass({
 	render() {
 		const width = getInheritableProp(this, 'width');
 		const height = getInheritableProp(this, 'height');
-		const {children, width: w, height: h, throttle, ...props} = this.props;
+		const {children, width: w, height: h, onMove, throttle, ...props} = this.props;
 		return (
 			<g {...props}>
 				{children}
