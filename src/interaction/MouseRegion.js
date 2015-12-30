@@ -11,6 +11,8 @@ function resetState() {
 		mousePercentY: null,
 		mouseUserX: null,
 		mouseUserY: null,
+		mouseClientX: null,
+		mouseClientY: null,
 	};
 }
 
@@ -30,6 +32,8 @@ export default React.createClass({
 		mousePercentY: React.PropTypes.number,
 		mouseUserX: React.PropTypes.number,
 		mouseUserY: React.PropTypes.number,
+		mouseClientX: React.PropTypes.number,
+		mouseClientY: React.PropTypes.number,
 	},
 	getChildContext() {
 		const {width, height} = this.props;
@@ -37,6 +41,7 @@ export default React.createClass({
 			mouseOffsetX, mouseOffsetY,
 			mousePercentX, mousePercentY,
 			mouseUserX, mouseUserY,
+			mouseClientX, mouseClientY,
 			} = this.state;
 		return {
 			width,
@@ -47,6 +52,8 @@ export default React.createClass({
 			mousePercentY,
 			mouseUserX,
 			mouseUserY,
+			mouseClientX,
+			mouseClientY,
 		};
 	},
 	getDefaultProps() {
@@ -70,6 +77,8 @@ export default React.createClass({
 
 		if (oldOffsetX !== mouseOffsetX || oldOffsetY !== mouseOffsetY)
 			this._throttleSetOffset({
+				mouseClientX: evt.clientX,
+				mouseClientY: evt.clientY,
 				mouseOffsetX,
 				mouseOffsetY,
 				mousePercentX,
