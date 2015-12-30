@@ -2,6 +2,7 @@
 
 import React from 'react';
 import throttleFn from 'lodash.throttle';
+import {getInheritableProp} from '../util';
 
 function resetState() {
 	return {
@@ -19,9 +20,13 @@ function resetState() {
 export default React.createClass({
 	displayName: 'MouseMove',
 	propTypes: {
-		width: React.PropTypes.number.isRequired,
-		height: React.PropTypes.number.isRequired,
+		width: React.PropTypes.number,
+		height: React.PropTypes.number,
 		throttle: React.PropTypes.number,
+	},
+	contextTypes: {
+		width: React.PropTypes.number,
+		height: React.PropTypes.number,
 	},
 	childContextTypes: {
 		width: React.PropTypes.number,
@@ -36,7 +41,8 @@ export default React.createClass({
 		mouseClientY: React.PropTypes.number,
 	},
 	getChildContext() {
-		const {width, height} = this.props;
+		const width = getInheritableProp(this, 'width');
+		const height = getInheritableProp(this, 'height');
 		const {
 			mouseOffsetX, mouseOffsetY,
 			mousePercentX, mousePercentY,
@@ -66,7 +72,8 @@ export default React.createClass({
 		return resetState();
 	},
 	handleMouseMove(evt) {
-		const {width, height} = this.props;
+		const width = getInheritableProp(this, 'width');
+		const height = getInheritableProp(this, 'height');
 		const {mouseOffsetX: oldOffsetX, mouseOffsetY: oldOffsetY} = this.state;
 		const targetBoundRect = evt.target.getBoundingClientRect();
 
@@ -103,7 +110,9 @@ export default React.createClass({
 			this._throttleSetOffset.cancel();
 	},
 	render() {
-		const {children, width, height, throttle, ...props} = this.props;
+		const width = getInheritableProp(this, 'width');
+		const height = getInheritableProp(this, 'height');
+		const {children, width: w, height: h, throttle, ...props} = this.props;
 		return (
 			<g {...props}>
 				{children}
