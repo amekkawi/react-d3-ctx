@@ -65,7 +65,13 @@ describe('util', () => {
 		});
 	});
 
-	// TODO: calculateScales
+	describe.skip('calculateScales', () => {
+		it('should return object with xScale and yScale props');
+		it('should use first arg as xScale range');
+		it('should use second arg as inverted yScale range');
+		it('should use third arg xScale domain');
+		it('should use fourth arg yScale domain');
+	});
 
 	describe('getInheritableProp', () => {
 		it('should fail if the first arg is not an object', () => {
