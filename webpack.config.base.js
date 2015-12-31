@@ -22,8 +22,7 @@ module.exports = {
 		loaders: [{
 			test: /\.js$/,
 			loader: 'babel-loader',
-			include: path.join(__dirname, './src'),
-			query: require('./babel-config')
+			include: path.join(__dirname, './src')
 		}]
 	},
 	output: {
