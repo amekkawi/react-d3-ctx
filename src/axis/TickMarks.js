@@ -15,6 +15,7 @@ const TickMarks = React.createClass({
 		tickSize: React.PropTypes.number,
 		stroke: React.PropTypes.string,
 		strokeWidth: React.PropTypes.number,
+		tickStyle: React.PropTypes.object,
 	},
 	getDefaultProps() {
 		return {
