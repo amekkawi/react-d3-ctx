@@ -4,7 +4,8 @@
 import AxisLine from './axis/AxisLine';
 import TickLabels from './axis/TickLabels';
 import TickMarks from './axis/TickMarks';
-export {AxisLine, TickLabels, TickMarks};
+import TickGrid from './axis/TickGrid';
+export {AxisLine, TickLabels, TickMarks, TickGrid};
 
 // data
 import XScale from './data/XScale';
