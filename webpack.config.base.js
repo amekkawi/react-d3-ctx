@@ -23,10 +23,7 @@ module.exports = {
 			test: /\.js$/,
 			loader: 'babel-loader',
 			include: path.join(__dirname, './src'),
-			query: {
-				"presets": ["es2015-loose", "react"],
-				"plugins": ["transform-object-rest-spread"]
-			}
+			query: require('./babel-config')
 		}]
 	},
 	output: {

@@ -28,7 +28,7 @@
     "build": "npm run build:lib && npm run build:umd && npm run build:umd:min",
     "clean": "rimraf lib dist && true",
     "prepublish": "npm run clean && npm run build",
-    "test": "mocha --compilers js:babel-core/register --recursive --require ./test/setup.js"
+    "test": "mocha --bail --compilers js:test/babel-hook --recursive --require ./test/setup.js"
   },
   "devDependencies": {
     "babel-cli": "^6.3.17",
