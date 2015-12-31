@@ -2,6 +2,10 @@
 
 import React from 'react';
 
+const baseStyle = {
+	shapeRendering: 'crispEdges'
+};
+
 const TickMarks = React.createClass({
 	propTypes: {
 		scale: React.PropTypes.func.isRequired,
@@ -59,12 +63,17 @@ const TickMarks = React.createClass({
 				break;
 		}
 
+		const style = tickStyle ? {
+			...baseStyle,
+			...tickStyle,
+		} : baseStyle;
+
 		return (
 			<g className={className}
 			   opacity="1"
 			   stroke={stroke}
 			   strokeWidth={strokeWidth}
-			   style={{ shapeRendering: 'crispEdges', ...tickStyle }}>
+			   style={style}>
 				{ticks.map((tick, idx) =>
 					<line
 						key={idx}
