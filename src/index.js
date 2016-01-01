@@ -22,7 +22,8 @@ export {Align, Region, ClipRect};
 // interaction
 import MouseMove from './interaction/MouseMove';
 import MouseLine from './interaction/MouseLine';
-export {MouseMove, MouseLine};
+import Voronoi from './interaction/Voronoi';
+export {MouseMove, MouseLine, Voronoi};
 
 // shape
 import Circles from './shape/Circles';
