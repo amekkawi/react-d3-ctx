@@ -40,6 +40,7 @@ export const Paths = React.createClass({
 			React.PropTypes.string
 		]),
 		strokeWidth: React.PropTypes.oneOfType([
+			React.PropTypes.func,
 			React.PropTypes.string,
 			React.PropTypes.number
 		]),
