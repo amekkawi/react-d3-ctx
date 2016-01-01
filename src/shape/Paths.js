@@ -2,6 +2,16 @@
 
 import d3 from 'd3';
 import React from 'react';
+import {wrapAsPure, wrapForContext} from '../util';
+
+const contextTypes = {
+	data: React.PropTypes.array,
+	seriesValuesAccessor: React.PropTypes.func,
+	xScale: React.PropTypes.func,
+	yScale: React.PropTypes.func,
+	xAccessor: React.PropTypes.func,
+	yAccessor: React.PropTypes.func,
+};
 
 export const Paths = React.createClass({
 	propTypes: {
@@ -89,17 +99,9 @@ export const Paths = React.createClass({
 	}
 });
 
-export default React.createClass({
-	displayName: 'PathsCtx',
-	contextTypes: {
-		data: React.PropTypes.array,
-		seriesValuesAccessor: React.PropTypes.func,
-		xScale: React.PropTypes.func,
-		yScale: React.PropTypes.func,
-		xAccessor: React.PropTypes.func,
-		yAccessor: React.PropTypes.func,
-	},
-	render() {
-		return <Paths {...this.context} {...this.props} />
-	}
-});
+export const PathsCtx = wrapForContext(Paths, 'PathsCtx', contextTypes);
+
+Paths.Pure = wrapAsPure(Paths, 'PathsPure');
+PathsCtx.Pure = wrapForContext(Paths.Pure, 'PathsPureCtx', contextTypes);
+
+export default PathsCtx;

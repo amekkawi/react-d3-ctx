@@ -2,6 +2,16 @@
 
 import d3 from 'd3';
 import React from 'react';
+import {wrapAsPure, wrapForContext} from '../util';
+
+const contextTypes = {
+	data: React.PropTypes.array,
+	seriesValuesAccessor: React.PropTypes.func,
+	xScale: React.PropTypes.func,
+	yScale: React.PropTypes.func,
+	xAccessor: React.PropTypes.func,
+	yAccessor: React.PropTypes.func,
+};
 
 export const Circles = React.createClass({
 	propTypes: {
@@ -81,17 +91,9 @@ export const Circles = React.createClass({
 	}
 });
 
-export default React.createClass({
-	displayName: 'CirclesCtx',
-	contextTypes: {
-		data: React.PropTypes.array,
-		seriesValuesAccessor: React.PropTypes.func,
-		xScale: React.PropTypes.func,
-		yScale: React.PropTypes.func,
-		xAccessor: React.PropTypes.func,
-		yAccessor: React.PropTypes.func,
-	},
-	render() {
-		return <Circles {...this.context} {...this.props} />
-	}
-});
+export const CirclesCtx = wrapForContext(Circles, 'CirclesCtx', contextTypes);
+
+Circles.Pure = wrapAsPure(Circles, 'CirclesPure');
+CirclesCtx.Pure = wrapForContext(Circles.Pure, 'CirclesPureCtx', contextTypes);
+
+export default CirclesCtx;

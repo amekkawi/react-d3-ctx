@@ -1,6 +1,8 @@
 "use strict";
 
 import d3 from 'd3';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 export function createScale(values, range) {
 	var scale = values.length > 0 && isDate(values[0])
@@ -25,4 +27,24 @@ export function getInheritableProp(component, prop) {
 
 export function isDate(d) {
 	return Object.prototype.toString.call(d) === '[object Date]';
+}
+
+export function wrapAsPure(Component, displayName) {
+	return React.createClass({
+		displayName: displayName,
+		mixins: [PureRenderMixin],
+		render() {
+			return <Component {...this.props} />
+		}
+	});
+}
+
+export function wrapForContext(Component, displayName, types) {
+	return React.createClass({
+		displayName: displayName,
+		contextTypes: types,
+		render() {
+			return <Component {...this.context} {...this.props} />
+		}
+	});
 }
