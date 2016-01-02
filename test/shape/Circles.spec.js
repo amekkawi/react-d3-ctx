@@ -10,29 +10,6 @@ import {getAttrs, getCAttrs} from '../setup';
 
 describe('Shape', () => {
 	describe('Circles', () => {
-		it('should fail if xScale/yScale are not functions', () => {
-			const circlesData = [
-				{
-					values: [
-						{ x: 0, y: 0 },
-						{ x: 10, y: 10 }
-					]
-				}
-			];
-
-			expect(() => {
-				TestUtils.renderIntoDocument(
-					<Circles data={circlesData} />
-				);
-			}).toThrow(/xScale is not a function/);
-
-			expect(() => {
-				TestUtils.renderIntoDocument(
-					<Circles data={circlesData} xScale={v => v} />
-				);
-			}).toThrow(/yScale is not a function/);
-		});
-
 		it('should have g with default props', () => {
 			const tree = TestUtils.renderIntoDocument(
 				<Circles
