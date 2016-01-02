@@ -97,4 +97,18 @@ describe('util', () => {
 			expect(getInheritableProp({props: {age: void 0}, context: {age: 50}}, 'age')).toBe(50);
 		});
 	});
+
+	describe.skip('wrapAsPure', () => {
+		it('should use specified display name');
+		it('should contain wrapped component');
+		it('should not render on shallow inequality');
+		it('should not re-render on shallow equality');
+	});
+
+	describe.skip('wrapForContext', () => {
+		it('should use specified display name');
+		it('should use specified contextTypes');
+		it('should pass contextType values');
+		it('should override contextType values with props');
+	});
 });
