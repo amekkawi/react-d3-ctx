@@ -5,8 +5,8 @@ import expect from 'expect';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
-import {default as CirclesCtx, Circles} from '../../src/shape/Circles';
-import {getAttrs, getCAttrs} from '../setup';
+import CirclesCtx, {Circles} from '../../src/shape/Circles';
+import {getAttrs, getCAttrs, expectContext} from '../setup';
 
 describe('Shape', () => {
 	describe('Circles', () => {
@@ -262,7 +262,14 @@ describe('Shape', () => {
 		});
 
 		it('should pass context', () => {
-			const outerContext = {
+			expectContext(CirclesCtx, Circles, {
+				data: React.PropTypes.array,
+				seriesValuesAccessor: React.PropTypes.func,
+				xScale: React.PropTypes.func,
+				yScale: React.PropTypes.func,
+				xAccessor: React.PropTypes.func,
+				yAccessor: React.PropTypes.func,
+			}, {
 				data: [
 					{
 						vals: [
@@ -275,119 +282,20 @@ describe('Shape', () => {
 				yScale: v => v * 20,
 				xAccessor: v => v.xx,
 				yAccessor: v => v.yy,
-			};
-
-			const OuterContext = React.createClass({
-				childContextTypes: {
-					data: React.PropTypes.array,
-					seriesValuesAccessor: React.PropTypes.func,
-					xScale: React.PropTypes.func,
-					yScale: React.PropTypes.func,
-					xAccessor: React.PropTypes.func,
-					yAccessor: React.PropTypes.func,
-				},
-				getChildContext() {
-					return outerContext;
-				},
-				render() {
-					return this.props.children;
-				}
+			}, {
+				data: [
+					{
+						vals: [
+							{ xx: 5, yy: 10 }
+						]
+					}
+				],
+				seriesValuesAccessor: s => s.vals,
+				xScale: v => v * 10,
+				yScale: v => v * 20,
+				xAccessor: v => v.xx,
+				yAccessor: v => v.yy,
 			});
-
-			const tree = TestUtils.renderIntoDocument(
-				<OuterContext>
-					<CirclesCtx/>
-				</OuterContext>
-			);
-
-			const contextChild = TestUtils.findRenderedComponentWithType(tree, CirclesCtx);
-			expect(contextChild.context.data).toBe(outerContext.data);
-			expect(contextChild.context.seriesValuesAccessor).toBe(outerContext.seriesValuesAccessor);
-			expect(contextChild.context.xScale).toBe(outerContext.xScale);
-			expect(contextChild.context.yScale).toBe(outerContext.yScale);
-			expect(contextChild.context.xAccessor).toBe(outerContext.xAccessor);
-			expect(contextChild.context.yAccessor).toBe(outerContext.yAccessor);
-
-			const circlesChild = TestUtils.findRenderedComponentWithType(tree, Circles);
-			expect(circlesChild.props.data).toBe(outerContext.data);
-			expect(circlesChild.props.seriesValuesAccessor).toBe(outerContext.seriesValuesAccessor);
-			expect(circlesChild.props.xScale).toBe(outerContext.xScale);
-			expect(circlesChild.props.yScale).toBe(outerContext.yScale);
-			expect(circlesChild.props.xAccessor).toBe(outerContext.xAccessor);
-			expect(circlesChild.props.yAccessor).toBe(outerContext.yAccessor);
-		});
-
-		it('should override context with props', () => {
-			const outerContext = {
-				data: [
-					{
-						vals: [
-							{ xx: 5, yy: 10 }
-						]
-					}
-				],
-				seriesValuesAccessor: s => s.vals,
-				xScale: v => v * 10,
-				yScale: v => v * 20,
-				xAccessor: v => v.xx,
-				yAccessor: v => v.yy,
-			};
-
-			const propOverrides = {
-				data: [
-					{
-						vals: [
-							{ xx: 5, yy: 10 }
-						]
-					}
-				],
-				seriesValuesAccessor: s => s.vals,
-				xScale: v => v * 10,
-				yScale: v => v * 20,
-				xAccessor: v => v.xx,
-				yAccessor: v => v.yy,
-			};
-
-			const OuterContext = React.createClass({
-				childContextTypes: {
-					data: React.PropTypes.array,
-					seriesValuesAccessor: React.PropTypes.func,
-					xScale: React.PropTypes.func,
-					yScale: React.PropTypes.func,
-					xAccessor: React.PropTypes.func,
-					yAccessor: React.PropTypes.func,
-				},
-				getChildContext() {
-					return outerContext;
-				},
-				render() {
-					return this.props.children;
-				}
-			});
-
-			const tree = TestUtils.renderIntoDocument(
-				<OuterContext>
-					<CirclesCtx
-						{...propOverrides}
-					/>
-				</OuterContext>
-			);
-
-			const contextChild = TestUtils.findRenderedComponentWithType(tree, CirclesCtx);
-			expect(contextChild.context.data).toBe(outerContext.data);
-			expect(contextChild.context.seriesValuesAccessor).toBe(outerContext.seriesValuesAccessor);
-			expect(contextChild.context.xScale).toBe(outerContext.xScale);
-			expect(contextChild.context.yScale).toBe(outerContext.yScale);
-			expect(contextChild.context.xAccessor).toBe(outerContext.xAccessor);
-			expect(contextChild.context.yAccessor).toBe(outerContext.yAccessor);
-
-			const circlesChild = TestUtils.findRenderedComponentWithType(tree, Circles);
-			expect(circlesChild.props.data).toBe(propOverrides.data);
-			expect(circlesChild.props.seriesValuesAccessor).toBe(propOverrides.seriesValuesAccessor);
-			expect(circlesChild.props.xScale).toBe(propOverrides.xScale);
-			expect(circlesChild.props.yScale).toBe(propOverrides.yScale);
-			expect(circlesChild.props.xAccessor).toBe(propOverrides.xAccessor);
-			expect(circlesChild.props.yAccessor).toBe(propOverrides.yAccessor);
 		});
 	});
 });
