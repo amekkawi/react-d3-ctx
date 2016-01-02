@@ -25,7 +25,8 @@ export function getCAttrs(component, attrs) {
 	return getAttrs(ReactDOM.findDOMNode(component), attrs);
 }
 
-export function expectContext(ContextComponent, Component, childContextTypes, contextProps) {
+export function expectContext(ContextComponent, Component, childContextTypes, contextProps, propOverrides) {
+	const contextKeys = Object.keys(ContextComponent.contextTypes).sort();
 	const OuterContext = React.createClass({
 		childContextTypes,
 		getChildContext() {
@@ -36,23 +37,42 @@ export function expectContext(ContextComponent, Component, childContextTypes, co
 		}
 	});
 
-	const tree = TestUtils.renderIntoDocument(
-		<OuterContext>
-			<ContextComponent/>
-		</OuterContext>
-	);
+	{
+		const tree = TestUtils.renderIntoDocument(
+			<OuterContext>
+				<ContextComponent/>
+			</OuterContext>
+		);
 
-	const contextKeys = Object.keys(ContextComponent.contextTypes).sort();
-	expect(typeof ContextComponent.contextTypes).toBe('object', 'context is object');
-	expect(contextKeys).toEqual(Object.keys(contextProps).sort(), 'context keys match');
+		expect(typeof ContextComponent.contextTypes).toBe('object', 'context is object');
+		expect(contextKeys).toEqual(Object.keys(contextProps).sort(), 'context keys match');
 
-	const contextChild = TestUtils.findRenderedComponentWithType(tree, ContextComponent);
-	for (let i = 0; i < contextKeys.length; i++) {
-		expect(contextChild.context[contextKeys[i]]).toBe(contextProps[contextKeys[i]], `context prop "${contextKeys[i]}" received from outer`);
+		const contextChild = TestUtils.findRenderedComponentWithType(tree, ContextComponent);
+		for (let i = 0; i < contextKeys.length; i++) {
+			expect(contextChild.context[contextKeys[i]]).toBe(contextProps[contextKeys[i]], `context prop "${contextKeys[i]}" received from outer`);
+		}
+
+		const circlesChild = TestUtils.findRenderedComponentWithType(tree, Component);
+		for (let i = 0; i < contextKeys.length; i++) {
+			expect(circlesChild.props[contextKeys[i]]).toBe(contextProps[contextKeys[i]], `context prop "${contextKeys[i]}" passed to child`);
+		}
 	}
 
-	const circlesChild = TestUtils.findRenderedComponentWithType(tree, Component);
-	for (let i = 0; i < contextKeys.length; i++) {
-		expect(circlesChild.props[contextKeys[i]]).toBe(contextProps[contextKeys[i]], `context prop "${contextKeys[i]}" passed as prop`);
+	if (propOverrides) {
+		const tree = TestUtils.renderIntoDocument(
+			<OuterContext>
+				<ContextComponent {...propOverrides}/>
+			</OuterContext>
+		);
+
+		const contextChild = TestUtils.findRenderedComponentWithType(tree, ContextComponent);
+		for (let i = 0; i < contextKeys.length; i++) {
+			expect(contextChild.context[contextKeys[i]]).toBe(contextProps[contextKeys[i]]);
+		}
+
+		const overrideChild = TestUtils.findRenderedComponentWithType(tree, Component);
+		for (let i = 0; i < contextKeys.length; i++) {
+			expect(overrideChild.props[contextKeys[i]]).toBe(propOverrides[contextKeys[i]], `prop "${contextKeys[i]}" overrides context when passed to child`);
+		}
 	}
 }
