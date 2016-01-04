@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import {getTicks, getTickValues, getTickFormat} from '../common/ticks';
 
 const TickLabels = React.createClass({
 	propTypes: {
@@ -8,14 +9,16 @@ const TickLabels = React.createClass({
 		orient: React.PropTypes.oneOf(['top', 'bottom', 'left', 'right']).isRequired,
 		className: React.PropTypes.string,
 		ticks: React.PropTypes.oneOfType([
-			React.PropTypes.arrayOf(React.PropTypes.number),
-			React.PropTypes.number,
 			React.PropTypes.func,
+			React.PropTypes.number,
+			React.PropTypes.array,
 		]),
+		tickValues: React.PropTypes.array,
 		fill: React.PropTypes.string,
 		stroke: React.PropTypes.string,
 		strokeWidth: React.PropTypes.number,
 		tickSize: React.PropTypes.number,
+		tickPadding: React.PropTypes.number,
 		labelStyle: React.PropTypes.object,
 		format: React.PropTypes.func,
 	},
@@ -23,50 +26,45 @@ const TickLabels = React.createClass({
 		return {
 			className: 'rd3-ticklabels',
 			ticks: 10,
-			tickSize: 7,
+			tickSize: 6,
+			tickPadding: 3,
 			stroke: '#FFF',
 			fill: '#000',
 			strokeWidth: 0,
-			format: v => v,
 		}
 	},
-	getTicks() {
-		var {ticks, scale} = this.props;
-
-		if (typeof ticks === 'function') {
-			ticks = ticks(this.props);
-		}
-
-		if (typeof ticks === 'number') {
-			ticks = scale.ticks
-				? scale.ticks(ticks)
-				: scale.domain();
-		}
-
-		return ticks;
-	},
+	getTicks,
+	getTickValues,
+	getTickFormat,
 	render() {
+		const {
+			className, scale, orient, tickSize, tickPadding,
+			fill, stroke, strokeWidth, labelStyle
+			} = this.props;
+
 		const ticks = this.getTicks();
-		const {className, scale, orient, format, tickSize, fill, stroke, strokeWidth, labelStyle} = this.props;
+		const tickValues = this.getTickValues({ticks});
+		const tickFormat = this.getTickFormat({ticks});
 
 		const adjustedScale = scale.rangeBand
 			? d => scale(d) + scale.rangeBand() / 2
 			: scale;
 
+		const tickOffset = tickSize + tickPadding;
 		var orientFlip = 1, tr, dy, textAnchor;
 		switch (orient) {
 			case 'top':
 				orientFlip = -1;
 			case 'bottom':
 				dy = orientFlip < 0 ? '0em' : '.71em';
-				tr = tick => `translate(${adjustedScale(tick)},${tickSize * orientFlip})`;
+				tr = tick => `translate(${adjustedScale(tick)},${tickOffset * orientFlip})`;
 				textAnchor = 'middle';
 				break;
 			case 'left':
 				dy = '.32em';
 				orientFlip = -1;
 			case 'right':
-				tr = tick => `translate(${tickSize * orientFlip},${adjustedScale(tick)})`;
+				tr = tick => `translate(${tickOffset * orientFlip},${adjustedScale(tick)})`;
 				textAnchor = orient === 'left' ? 'end' : 'start';
 				break;
 		}
@@ -79,9 +77,9 @@ const TickLabels = React.createClass({
 			   textAnchor={textAnchor}
 			   style={labelStyle}>
 
-				{ticks.map((tick, idx) =>
+				{tickValues.map((tick, idx) =>
 					<text key={idx} transform={tr(tick)} dy={dy}>
-						{format(tick)}
+						{tickFormat(tick)}
 					</text>
 				)}
 			</g>

@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import {getTicks, getTickValues, getTickFormat} from '../common/ticks';
 
 const baseStyle = {
 	shapeRendering: 'crispEdges'
@@ -12,10 +13,11 @@ const TickMarks = React.createClass({
 		orient: React.PropTypes.oneOf(['top', 'bottom', 'left', 'right']).isRequired,
 		className: React.PropTypes.string,
 		ticks: React.PropTypes.oneOfType([
-			React.PropTypes.arrayOf(React.PropTypes.number),
-			React.PropTypes.number,
 			React.PropTypes.func,
+			React.PropTypes.number,
+			React.PropTypes.array,
 		]),
+		tickValues: React.PropTypes.array,
 		tickSize: React.PropTypes.number,
 		stroke: React.PropTypes.string,
 		strokeWidth: React.PropTypes.number,
@@ -30,21 +32,13 @@ const TickMarks = React.createClass({
 			strokeWidth: 1,
 		}
 	},
+	getTicks,
+	getTickValues,
+	getTickFormat,
 	render() {
-		var {ticks} = this.props;
 		const {className, scale, orient, tickSize, stroke, strokeWidth, tickStyle} = this.props;
 		const orientFlip = orient === 'top' || orient === 'right' ? -1 : 1;
-
-		if (typeof ticks === 'function') {
-			ticks = ticks(this.props);
-		}
-
-		if (typeof ticks === 'number') {
-			ticks = scale.ticks
-				? scale.ticks(ticks)
-				: scale.domain();
-		}
-
+		const tickValues = this.getTickValues({scale});
 		const adjustedScale = scale.rangeBand
 			? d => scale(d) + scale.rangeBand() / 2
 			: scale;
@@ -74,7 +68,7 @@ const TickMarks = React.createClass({
 			   stroke={stroke}
 			   strokeWidth={strokeWidth}
 			   style={style}>
-				{ticks.map((tick, idx) =>
+				{tickValues.map((tick, idx) =>
 					<line
 						key={idx}
 						transform={tr(tick)}
