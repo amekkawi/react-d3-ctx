@@ -14,6 +14,8 @@ function resetState() {
 		mouseUserY: null,
 		mouseClientX: null,
 		mouseClientY: null,
+		mousePageX: null,
+		mousePageY: null,
 	};
 }
 
@@ -40,6 +42,8 @@ export default React.createClass({
 		mouseUserY: React.PropTypes.number,
 		mouseClientX: React.PropTypes.number,
 		mouseClientY: React.PropTypes.number,
+		mousePageX: React.PropTypes.number,
+		mousePageY: React.PropTypes.number,
 	},
 	getChildContext() {
 		const width = getInheritableProp(this, 'width');
@@ -49,6 +53,7 @@ export default React.createClass({
 			mousePercentX, mousePercentY,
 			mouseUserX, mouseUserY,
 			mouseClientX, mouseClientY,
+			mousePageX, mousePageY,
 			} = this.state;
 		return {
 			width,
@@ -61,6 +66,8 @@ export default React.createClass({
 			mouseUserY,
 			mouseClientX,
 			mouseClientY,
+			mousePageX,
+			mousePageY,
 		};
 	},
 	getDefaultProps() {
@@ -87,6 +94,8 @@ export default React.createClass({
 			this._throttleSetOffset({
 				mouseClientX: evt.clientX,
 				mouseClientY: evt.clientY,
+				mousePageX: evt.pageX,
+				mousePageY: evt.pageY,
 				mouseOffsetX,
 				mouseOffsetY,
 				mousePercentX,
