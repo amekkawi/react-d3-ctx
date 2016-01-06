@@ -18,11 +18,18 @@ echo "NPM install..."
 npm install
 [ $? -ne 0 ] && echo "Failed to npm install" 1>&2 && exit 1
 
+echo "NPM clean and build..."
+npm run clean
+[ $? -ne 0 ] && echo "Failed to clean" 1>&2 && exit 1
+npm run build
+[ $? -ne 0 ] && echo "Failed to build" 1>&2 && exit 1
+
 echo "Running tests..."
 npm test
 [ $? -ne 0 ] && echo "Failed to run tests" 1>&2 && exit 1
 
-echo "Packing..."
+echo "Publishing..."
+npm publish
 packfile="$(npm pack . | tail -n 1)"
 [ $? -ne 0 ] && echo "Failed to NPM pack" 1>&2 && exit 1
 [ -z "$packfile" ] && echo "Failed to get file path from NPM pack" 1>&2 && exit 1

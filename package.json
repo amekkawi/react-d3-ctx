@@ -27,7 +27,6 @@
     "build:umd:min": "webpack src/index.js dist/react-d3-ctx.min.js --config webpack.config.production.js",
     "build": "npm run build:lib && npm run build:umd && npm run build:umd:min",
     "clean": "rimraf lib dist && true",
-    "prepublish": "npm run clean && npm run build",
     "test": "mocha --bail --compilers js:babel-core/register --recursive --require ./test/setup.js ./test/index.js"
   },
   "devDependencies": {
