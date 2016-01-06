@@ -1,6 +1,6 @@
 {
   "name": "react-d3-ctx",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React D3 components for building custom charts",
   "main": "lib/index.js",
   "author": "Andre Mekkawi <github@andremekkawi.com>",
