@@ -14,6 +14,10 @@ git diff-index --quiet HEAD
 test -z "$(git ls-files --exclude-standard --others)"
 [ $? -ne 0 ] && echo "Failed: One or more untracked files are present" 1>&2 && exit 1
 
+echo "NPM install..."
+npm install
+[ $? -ne 0 ] && echo "Failed to npm install" 1>&2 && exit 1
+
 echo "Running tests..."
 npm test
 [ $? -ne 0 ] && echo "Failed to run tests" 1>&2 && exit 1
