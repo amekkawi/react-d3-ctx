@@ -1,4 +1,7 @@
+/.idea
+/node_modules
 /demo
 /src
 /test
 /webpack.config.*.js
+/.babelrc
