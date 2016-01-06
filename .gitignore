@@ -3,6 +3,5 @@ node_modules/
 dist/
 lib/
 *.tgz
-.tmpnpmpack/
 npm-debug.log
 .DS_Store
