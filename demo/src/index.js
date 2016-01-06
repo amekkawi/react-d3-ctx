@@ -25,34 +25,28 @@ export const LineChart = React.createClass({
 			margins: { top: 10, right: 20, bottom: 50, left: 45 }
 		};
 	},
-	componentWillUpdate() {
-		this._startRender = new Date().getTime();
-	},
-	componentDidUpdate() {
-		console.info('Chart Re-Render', (new Date().getTime() - this._startRender).toFixed() + 'ms');
-	},
 	render() {
 		const {colors, width, height, margins, data} = this.props;
 		const chartWidth = width - margins.left - margins.right;
 		const chartHeight = height - margins.top - margins.bottom;
 		const chartTransform = `translate(${margins.left},${margins.top})`;
 		return (
-			<svg className="rd3-chart" width={width} height={height}>
-				<Region className="rd3-chartregion" width={chartWidth} height={chartHeight} transform={chartTransform}>
+			<svg width={width} height={height}>
+				<Region width={chartWidth} height={chartHeight} transform={chartTransform}>
 					<PointData data={data}>
 						<TickGrid orient="horizontal"/>
 						<Paths stroke={(series, idx) => colors(idx)} strokeWidth={series => series.strokeWidth || 1} />
-						<Align className="rd3-xaxis" orient="bottom">
-							<AxisLine tickSize={4}/>
-							<TickMarks ticks={20} tickSize={4}/>
-							<TickLabels ticks={20} labelStyle={{ fontSize: 12 }}/>
+						<Align orient="bottom">
+							<AxisLine/>
+							<TickMarks/>
+							<TickLabels/>
 						</Align>
-						<Align className="rd3-yaxis" orient="left">
-							<AxisLine tickSize={4}/>
-							<TickMarks tickSize={4}/>
-							<TickLabels tickSize={5} labelStyle={{ fontSize: 12 }} tickSize={7}/>
+						<Align orient="left">
+							<AxisLine/>
+							<TickMarks/>
+							<TickLabels/>
 						</Align>
-						<MouseMove className="rd3-chartregion">
+						<MouseMove>
 							<MouseLine />
 						</MouseMove>
 					</PointData>
@@ -111,12 +105,6 @@ const PlotChart = React.createClass({
 			margins: { top: 10, right: 20, bottom: 50, left: 45 }
 		};
 	},
-	componentWillUpdate() {
-		this._startRender = new Date().getTime();
-	},
-	componentDidUpdate() {
-		console.info('Chart Re-Render', (new Date().getTime() - this._startRender).toFixed() + 'ms');
-	},
 	render() {
 		const {colors, width, height, margins, data} = this.props;
 		const chartWidth = width - margins.left - margins.right;
@@ -126,16 +114,17 @@ const PlotChart = React.createClass({
 			<svg className="rd3-chart" width={width} height={height}>
 				<Region className="rd3-chartregion" width={chartWidth} height={chartHeight} transform={chartTransform}>
 					<PointData data={data}>
-						<TickGrid orient="horizontal"/>
+						<TickGrid orient="horizontal" strokeDasharray={null}/>
+						<TickGrid orient="vertical" ticks={20} strokeDasharray={null}/>
 						<Align className="rd3-xaxis" orient="bottom">
-							<AxisLine tickSize={4}/>
-							<TickMarks ticks={20} tickSize={4}/>
-							<TickLabels ticks={20} labelStyle={{ fontSize: 12 }}/>
+							<AxisLine tickSize={8}/>
+							<TickMarks ticks={20} tickSize={8}/>
+							<TickLabels ticks={20} tickSize={8} labelStyle={{ fontSize: 12 }}/>
 						</Align>
 						<Align className="rd3-yaxis" orient="left">
-							<AxisLine tickSize={4}/>
-							<TickMarks tickSize={4}/>
-							<TickLabels tickSize={5} labelStyle={{ fontSize: 12 }} tickSize={7}/>
+							<AxisLine/>
+							<TickMarks/>
+							<TickLabels labelStyle={{ fontSize: 12 }}/>
 						</Align>
 						<PlotChartCircles colors={colors}/>
 					</PointData>
